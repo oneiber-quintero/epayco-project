@@ -1,0 +1,150 @@
+{
+	"info": {
+		"_postman_id": "d681b7dd-296d-44e1-9089-f8eda7d7c51f",
+		"name": "wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3591899"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"document\": \"12345678\",\r\n    \"names\": \"Oneiber Quintero\",\r\n    \"email\": \"oneiber.37.37@gmail.com\",\r\n    \"cellphone\": \"+584261947596\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/wallet/register",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"wallet",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "top up wallet",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"document\": \"12345678\",\r\n    \"cellphone\": \"+584261947596\",\r\n    \"credit\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/wallet/top-up-wallet",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"wallet",
+						"top-up-wallet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check balance",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"document\": \"12345678\",\r\n    \"cellphone\": \"+584261947596\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/wallet/check-balance",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"wallet",
+						"check-balance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "payout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"document\": \"12345678\",\r\n    \"cellphone\": \"+584261947596\",\r\n    \"transactionId\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/wallet/payout",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"wallet",
+						"payout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "confirm-payout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"sessionId\": \"9363a255-ec91-49f9-a7d6-ad452b443636\",\r\n    \"token\": \"914370\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3100/wallet/confirm-payout",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"wallet",
+						"confirm-payout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
