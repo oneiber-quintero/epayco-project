@@ -84,3 +84,25 @@ exports.payoutClient = async (req, res) => {
       });
     });
 };
+
+exports.confirmPayoutClient = async (req, res) => {
+  const body = req.body;
+  const url = `${SOAP_URL}/confirm-payout`;
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      res.json(data);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({
+        success: false,
+        cod_error: "99",
+        message_error: "Error interno",
+      });
+    });
+};

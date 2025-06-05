@@ -4,6 +4,7 @@ const {
   topUpWalletClient,
   checkBalanceClient,
   payoutClient,
+  confirmPayoutClient,
 } = require("../controllers/walletController");
 
 const router = express.Router();
@@ -12,5 +13,6 @@ router.post("/register", registerClient);
 router.post("/top-up-wallet", topUpWalletClient);
 router.post("/check-balance", checkBalanceClient);
 router.post("/payout", payoutClient);
+router.post("/confirm-payout", confirmPayoutClient);
 
 module.exports = router;

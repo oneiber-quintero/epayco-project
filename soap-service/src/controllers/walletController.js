@@ -183,7 +183,7 @@ exports.payoutClient = async (req, res) => {
       message_error = "Error ya tienes un pago pendiente";
     } else if (payoutFound.status === "payed") {
       message_error = "Error ya pagaste esta orden";
-    } 
+    }
     res.status(401).json({
       success: false,
       cod_error: "02",
@@ -250,4 +250,103 @@ exports.payoutClient = async (req, res) => {
       return;
     }
   }
+};
+
+exports.confirmPayoutClient = async (req, res) => {
+  const body = req.body;
+  const { sessionId, token } = body;
+
+  if (!sessionId || !token) {
+    res.status(401).json({
+      success: false,
+      cod_error: "01",
+      message_error: "Campos requeridos faltantes",
+      data: {},
+    });
+  }
+
+  const payoutFound = await Payout.findOne({
+    sessionId: sessionId,
+    token: token,
+  }).exec();
+
+  if (!payoutFound) {
+    res.status(401).json({
+      success: false,
+      cod_error: "02",
+      message_error: "Error solicitud de pago no encontrada",
+      data: {},
+    });
+    return;
+  }
+
+  if (payoutFound) {
+    let message_error = "Error no tienes pagos pendiente";
+    if (payoutFound.status === "payed") {
+      message_error = "Error ya pagaste esta orden";
+       res.status(401).json({
+        success: false,
+        cod_error: "02",
+        message_error: message_error,
+        data: {},
+      });
+      return;
+    } else if (payoutFound.status !== "pending") {
+      res.status(401).json({
+        success: false,
+        cod_error: "02",
+        message_error: message_error,
+        data: {},
+      });
+      return;
+    }
+  }
+
+  const clientFound = await Client.findById(payoutFound.clientId).exec();
+
+  if (!clientFound) {
+    res.status(401).json({
+      success: false,
+      cod_error: "02",
+      message_error: "Error client no existe",
+      data: {},
+    });
+    return;
+  }
+
+  if (clientFound.balance < payoutFound.total) {
+    res.status(401).json({
+      success: false,
+      cod_error: "02",
+      message_error: "Error saldo insuficiente",
+      data: {},
+    });
+    return;
+  }
+
+  const balance = clientFound.balance - payoutFound.total;
+  const request = {
+    balance: balance,
+  };
+
+  const clientUpdate = await Client.findByIdAndUpdate(
+    clientFound._id,
+    request,
+    { new: true }
+  ).exec();
+
+  const payoutUpdate = await Payout.findByIdAndUpdate(
+    payoutFound._id,
+    {
+      status: "payed",
+    },
+    { new: true }
+  ).exec();
+
+  res.status(200).json({
+    success: true,
+    cod_error: "00",
+    message_error: "pago realizado con éxito",
+    data: clientUpdate,
+  });
 };
