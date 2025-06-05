@@ -1,0 +1,15 @@
+{
+  "name": "rest-service",
+  "version": "1.0.0",
+  "description": "epayco rest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch src/index.js"
+  },
+  "author": "Oneiber Quintero",
+  "license": "ISC",
+  "dependencies": {
+    "express": "5.1.0"
+  }
+}

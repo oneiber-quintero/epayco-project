@@ -1,0 +1,48 @@
+# Dependencias de Node.js
+node_modules/
+package-lock.json
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Salida de compilación
+dist/
+build/
+
+# Caché de módulos
+.cache/
+.next/
+.out/
+
+# Archivos temporales de procesos
+*.pid
+*.seed
+*.tgz
+*.bak
+
+# Directorios de depuración
+.vscode/
+.idea/
+.DS_Store
+
+# Archivos generados por pruebas
+coverage/
+.jest/
+
+# Ignorar Git en submódulos
+.git/
+
+# Configuración opcional
+*.swp
+*.swo
