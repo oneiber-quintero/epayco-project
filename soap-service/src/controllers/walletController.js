@@ -104,3 +104,39 @@ exports.topUpWalletClient = async (req, res) => {
     data: clientUpdate,
   });
 };
+
+exports.checkBalanceClient = async (req, res) => {
+  const body = req.body;
+  const { document, cellphone } = body;
+
+  if (!document || !cellphone) {
+    res.status(401).json({
+      success: false,
+      cod_error: "01",
+      message_error: "Campos requeridos faltantes",
+      data: {},
+    });
+  }
+
+  const clientFound = await Client.findOne({
+    document: document,
+    cellphone: cellphone,
+  }).exec();
+
+  if (!clientFound) {
+    res.status(401).json({
+      success: false,
+      cod_error: "02",
+      message_error: "Error client no existe",
+      data: {},
+    });
+    return;
+  }
+
+  res.status(200).json({
+    success: true,
+    cod_error: "00",
+    message_error: "solicitar saldo con éxito",
+    data: clientFound,
+  });
+};
