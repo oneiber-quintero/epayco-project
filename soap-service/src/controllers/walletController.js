@@ -55,3 +55,52 @@ exports.registerClient = async (req, res) => {
     }
   }
 };
+
+exports.topUpWalletClient = async (req, res) => {
+  const body = req.body;
+  const { document, cellphone, credit } = body;
+
+  if (!document || !cellphone || !credit) {
+    res.status(401).json({
+      success: false,
+      cod_error: "01",
+      message_error: "Campos requeridos faltantes",
+      data: {},
+    });
+  }
+
+  const clientFound = await Client.findOne({
+    document: document,
+    cellphone: cellphone,
+  }).exec();
+
+  if (!clientFound) {
+    res.status(401).json({
+      success: false,
+      cod_error: "02",
+      message_error: "Error client no existe",
+      data: {},
+    });
+    return;
+  }
+
+  const balance = clientFound.balance + credit;
+  const request = {
+    document: document,
+    cellphone: cellphone,
+    balance: balance,
+  };
+
+  const clientUpdate = await Client.findByIdAndUpdate(
+    clientFound._id,
+    request,
+    { new: true }
+  ).exec();
+
+  res.status(200).json({
+    success: true,
+    cod_error: "00",
+    message_error: "Cliente recargado con éxito",
+    data: clientUpdate,
+  });
+};
